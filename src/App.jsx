@@ -12,6 +12,7 @@ function App() {
 
   return (
     <>
+      <h1>Stock Prices</h1>  
     </>
   )
 }
