@@ -1,12 +1,17 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [data, setData] = useState([]);
+
+  useEffect(() =>{
+    fetch('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo')
+    .then(response => response.json())
+    .then(data => {setData(data); console.log(data);});
+  },[]);
 
   return (
     <>
-      <h1>Hello world</h1>
     </>
   )
 }
