@@ -8,7 +8,6 @@ const Themeicon = () => {
     setDarkMode(!darkMode);
   }
 
-  
   return (
   <button className={`rounded-lg border-1 border-neutral-400 p-2 
                       absolute right-24 xl:right-32 shadow-lg 

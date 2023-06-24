@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { mockSearchResults } from "../constants/mock";
 import { XIcon, SearchIcon } from "@heroicons/react/solid";
 import SearchResults from "./SearchResult";
+import ThemeContext from "../context/ThemeContext";
 import { searchStock, searchQuote } from "./helpers/API";
 
 const Search = ({ stockCallback, quoteCallback }) => {
   const [input, setInput] = useState("");
   const [quote, setQuote] = useState([]);
   const [bestMatches, setBestMatches] = useState([]);
+
+  const { darkMode } = useContext(ThemeContext);
 
   const clear = () => {
     setInput("");
@@ -18,22 +21,28 @@ const Search = ({ stockCallback, quoteCallback }) => {
     const results = await searchStock(stock.toUpperCase().trim());
     setBestMatches(results);
     stockCallback(results);
-    console.log(results)
-  }
+    console.log(results);
+  };
 
   const updateQuote = async (stock) => {
     const results = await searchQuote(stock.toUpperCase().trim());
     setQuote(results);
     quoteCallback(results);
-    console.log(results)
-  }
+    console.log(results);
+  };
 
   return (
-    <div className="flex items-center my-4 border-2 rounded-md relative z-50 w-96 bg-white border-neutral-200">
+    <div
+      className={`flex items-center my-4 border-2 rounded-md relative z-50 w-96 ${
+        darkMode ? "bg-gray-900 border-gray-800" : "bg-white border-neutral-200"
+      }`}
+    >
       <input
         type="text "
         value={input}
-        className="w-full px-4 py-2 focus:outline-none rounded-md"
+        className={`w-full px-4 py-2 focus:outline-none rounded-md ${
+          darkMode ? "bg-gray-900" : null
+        }`}
         placeholder="Search stock..."
         onChange={(event) => {
           setInput(event.target.value);
