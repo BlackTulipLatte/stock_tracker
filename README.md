@@ -1,4 +1,1 @@
-# wea_skills
-cd wea_skills <br />
-npm install <br />
-npm run dev <br />
+add own .env file as well as required npm modules 
