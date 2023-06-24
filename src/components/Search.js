@@ -1,33 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { mockSearchResults } from "../constants/mock";
-import {XIcon, SearchIcon} from "@heroicons/react/solid";
-import SearchResults from "./SearchResult"
-const Search = () => {
+import { XIcon, SearchIcon } from "@heroicons/react/solid";
+import SearchResults from "./SearchResult";
+import { searchStock, searchQuote } from "./helpers/API";
+
+const Search = ({ stockCallback, quoteCallback }) => {
   const [input, setInput] = useState("");
-  const [bestMatches, setBestMatches] = useState(mockSearchResults.result);
-  
+  const [quote, setQuote] = useState([]);
+  const [bestMatches, setBestMatches] = useState([]);
+
   const clear = () => {
     setInput("");
     setBestMatches([]);
   };
-  
-  const updateBestMatches = () => {
-    setBestMatches(mockSearchResults.result);
-  };
+
+  const updateBestMatches = async (stock) => {
+    const results = await searchStock(stock.toUpperCase().trim());
+    setBestMatches(results);
+    stockCallback(results);
+    console.log(results)
+  }
+
+  const updateQuote = async (stock) => {
+    const results = await searchQuote(stock.toUpperCase().trim());
+    setQuote(results);
+    quoteCallback(results);
+    console.log(results)
+  }
 
   return (
     <div className="flex items-center my-4 border-2 rounded-md relative z-50 w-96 bg-white border-neutral-200">
-      <input 
-        type="text " 
-        value={input} 
+      <input
+        type="text "
+        value={input}
         className="w-full px-4 py-2 focus:outline-none rounded-md"
         placeholder="Search stock..."
         onChange={(event) => {
           setInput(event.target.value);
         }}
-        onKeyDown={(event) => { // differs from onKeypress as show in video
+        onKeyDown={(event) => {
+          // differs from onKeypress as show in video
           if (event.key === "Enter") {
-            updateBestMatches();
+            updateBestMatches(input);
+            updateQuote(input);
           }
         }}
       />
@@ -36,14 +51,24 @@ const Search = () => {
         <button onClick={clear} className="m-1">
           <XIcon className="h-4 w-4 fill-gray-500" />
         </button>
-        )}
-        <button onClick={updateBestMatches} className="h-8 w-8 bg-indigo-500 rounded-md flex justify-center items-center m-1 p-2">
-          <SearchIcon className="h-4 w-4 fill-gray-100"/>
-        </button>
+      )}
+      <button
+        onClick={(event) => {
+          if (event.button === 0) {
+            // Check if left mouse button was clicked
+            updateBestMatches(input);
+            updateQuote(input);
+          }
+        }}
+        className="h-8 w-8 bg-indigo-500 rounded-md flex justify-center items-center m-1 p-2"
+      >
+        <SearchIcon className="h-4 w-4 fill-gray-100" />
+      </button>
 
-      {input && bestMatches.length > 0 ? <SearchResults results={bestMatches} /> : null}
+      {/*// commented out the dropdown menu for now. will implement after getting initial api call to work*/}
+      {/*{input && bestMatches.length > 0 ? <SearchResults results={bestMatches} /> : null}*/}
     </div>
   );
 };
 
-export default Search
+export default Search;
