@@ -1,0 +1,1 @@
+add own .env file as well as required npm modules 
