@@ -1,11 +1,11 @@
 import React from "react";
 import { useState, useContext } from "react";
 import { mockCompanyDetails } from "../constants/mock";
-import Header from "./Header";
-import Details from "./Details";
-import Overview from "./Overview";
-import Chart from "./Chart";
-import Search from "./Search";
+import Header from "../components/Header";
+import Details from "../components/Details";
+import Overview from "../components/Overview";
+import Chart from "../components/Chart";
+import Search from "../components/Search";
 import ThemeContext from "../context/ThemeContext";
 
 const Dashboard = () => {

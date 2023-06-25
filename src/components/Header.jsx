@@ -1,7 +1,7 @@
 import React from 'react';
 import Search from "./Search";
 import Themeicon from './Themeicon';
-import Login from './Login';
+import Login from './LoginButton';
 
 const Header = ({ name, stockCallback, quoteCallback  }) => {
   return <>
