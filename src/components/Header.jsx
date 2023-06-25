@@ -3,6 +3,7 @@ import Search from "./Search";
 import Themeicon from './Themeicon';
 import Login from './LoginButton';
 import SaveButton from './SaveButton';
+import SavedPageButton from './SavedPageButton';
 import {useState} from 'react'
 
 const Header = ({ name, stockCallback, quoteCallback, stockToBeSaved }) => {
@@ -22,6 +23,7 @@ const Header = ({ name, stockCallback, quoteCallback, stockToBeSaved }) => {
       <h1 className="text-5xl">{name}</h1>
       <Search stockCallback={stockCallback} quoteCallback={quoteCallback} UID={UID}/>  
     </div>
+    <SavedPageButton isLoggedIn={loggedIn}/>
     <SaveButton isLoggedIn={loggedIn} stockToBeSaved={stockToBeSaved} UID={UID}/>
     <Themeicon/>
     <Login loginFunc={updateLogin} UIDFunc={updateUID}/>
