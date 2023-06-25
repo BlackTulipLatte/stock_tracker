@@ -15,7 +15,7 @@ const Login = () => {
   return (
     <button
       className={`rounded-lg border-1 border-neutral-400 p-2 
-                  absolute right-32 xl:right-64 shadow-lg 
+                  absolute right-64 xl:right-64 shadow-lg 
                   ${darkMode ? "shadow-gray-100" : null}`}
     >
       <BookmarkIcon
