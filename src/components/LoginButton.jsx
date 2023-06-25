@@ -10,7 +10,7 @@ import {
 } from "firebase/auth";
 import { toast } from "react-toastify";
 
-const Login = ({ loginFunc }) => {
+const Login = ({ loginFunc, UIDFunc }) => {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
   const [value, setValue] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -27,7 +27,9 @@ const Login = ({ loginFunc }) => {
           localStorage.setItem("email", data.user.email);
           setIsLoggedIn(false);
           toast.success("Successfully logged in");
+          console.log(user.uid) // testing to see if user is authed
           loginFunc(isLoggedIn); // Pass isLoggedIn as true to the parent component
+          UIDFunc(user.uid); // Pass UID to the parent component
         })
         .catch((error) => {
           console.log("Error signing in with popup:", error);
