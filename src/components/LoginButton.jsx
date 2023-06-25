@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { PlusIcon } from '@heroicons/react/solid';
+import { LockClosedIcon } from '@heroicons/react/solid';
 import ThemeContext from '../context/ThemeContext';
 import { auth, provider } from "../util/FirebaseConfig";
 import { signInWithPopup } from "firebase/auth";
@@ -35,7 +35,7 @@ const Login = () => {
                   ${darkMode ? "shadow-gray-100" : null}`}
       onClick={handleClick}
     >
-      <PlusIcon
+      <LockClosedIcon
         className={`h-8 w-8 cursor-pointer stroke-1 fill-none stroke-neutral-400
                     ${darkMode
                       ? "fill-yellow-500 stroke-yellow-400"
