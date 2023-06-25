@@ -37,6 +37,7 @@ const Dashboard = () => {
             name={stock.name}
             stockCallback={updateStock}
             quoteCallback={updateQuote}
+            stockToBeSaved={stock}
           />
         </div>
       <div className="md:col-span-2 row-span-4">
