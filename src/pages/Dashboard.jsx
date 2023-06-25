@@ -13,7 +13,6 @@ const Dashboard = () => {
   //use state for all important variables
   const [stock, setStock] = useState([]);
   const [quote, setQuote] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(false);
 
   const { darkMode } = useContext(ThemeContext);
 
@@ -25,9 +24,7 @@ const Dashboard = () => {
     setQuote(stock);
   };
 
-  const updateLoggedIn = () => {
-    setLoggedIn(!loggedIn);
-  };
+
 
   return (
     <div
@@ -40,7 +37,6 @@ const Dashboard = () => {
             name={stock.name}
             stockCallback={updateStock}
             quoteCallback={updateQuote}
-            isLoggedIn = {loggedIn}
           />
         </div>
       <div className="md:col-span-2 row-span-4">
