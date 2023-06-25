@@ -1,32 +1,59 @@
 import React, { useEffect, useState, useContext } from "react";
-import { LockClosedIcon } from '@heroicons/react/solid';
-import ThemeContext from '../context/ThemeContext';
+import { LockClosedIcon } from "@heroicons/react/solid";
+import ThemeContext from "../context/ThemeContext";
 import { auth, provider } from "../util/FirebaseConfig";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithPopup, setPersistence, browserLocalPersistence } from "firebase/auth";
+import { toast } from "react-toastify";
 
-const Login = () => {
+const Login = ({loginFunc}) => {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
   const handleClick = () => {
-    signInWithPopup(auth, provider)
-      .then((data) => {
-        setValue(data.user.email);
-        localStorage.setItem("email", data.user.email);
-      })
-      .catch((error) => {
-        console.log("Error signing in with popup:", error);
-      });
+    if (isLoggedIn) {
+      setPersistence(auth, browserLocalPersistence)
+        .then(() => {
+          return signInWithPopup(auth, provider);
+        })
+        .then((data) => {
+          setValue(data.user.email);
+          localStorage.setItem("email", data.user.email);
+          setIsLoggedIn(false); // Update the isLoggedIn state to true
+          toast.success("Successfully logged in");
+          loginFunc(); // Call the loginFunc to notify the parent component about the login
+        })
+        .catch((error) => {
+          console.log("Error signing in with popup:", error);
+          toast.error("Error signing in");
+        });
+    } else {
+      toast.error("Already logged in");
+    }
   };
+  
 
   useEffect(() => {
-    const storedEmail = localStorage.getItem('email');
+    const storedEmail = localStorage.getItem("email");
     setValue(storedEmail);
   }, []);
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
+  useEffect(() => {
+    // Check if user is logged in on component mount
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+
+    return () => {
+      // Unsubscribe from the onAuthStateChanged listener when component unmounts
+      unsubscribe();
+    };
+  }, []);
 
   return (
     <button
@@ -37,9 +64,10 @@ const Login = () => {
     >
       <LockClosedIcon
         className={`h-8 w-8 cursor-pointer stroke-1 fill-none stroke-neutral-400
-                    ${darkMode
-                      ? "fill-yellow-500 stroke-yellow-400"
-                      : "fill-none stroke-neutral-400"
+                    ${
+                      darkMode
+                        ? "fill-yellow-500 stroke-yellow-400"
+                        : "fill-none stroke-neutral-400"
                     }`}
       />
     </button>

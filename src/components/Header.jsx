@@ -5,6 +5,9 @@ import Login from './LoginButton';
 import SaveButton from './SaveButton';
 
 const Header = ({ name, stockCallback, quoteCallback, isLoggedIn }) => {
+  const returnLog = () => {
+    return isLoggedIn;
+  }
   return <>
     <div className="x1:px-32">
       <h1 className="text-5xl">{name}</h1>
@@ -12,7 +15,7 @@ const Header = ({ name, stockCallback, quoteCallback, isLoggedIn }) => {
     </div>
     <SaveButton isLoggedIn={isLoggedIn}/>
     <Themeicon/>
-    <Login/>
+    <Login loginFunc={returnLog}/>
   </>;
 };
 
