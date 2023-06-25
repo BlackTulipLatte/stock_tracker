@@ -10,6 +10,7 @@ const Header = ({ name, stockCallback, quoteCallback  }) => {
       <Search stockCallback={stockCallback} quoteCallback={quoteCallback}/>
     </div>
     <div><Themeicon /></div>
+    <div><Themeicon /></div>
     <div><Login /></div>
 
   </>;
