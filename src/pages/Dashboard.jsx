@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useContext } from "react";
-import { mockCompanyDetails } from "../constants/mock";
 import Header from "../components/Header";
 import Details from "../components/Details";
 import Overview from "../components/Overview";
@@ -16,15 +15,13 @@ const Dashboard = () => {
 
   const { darkMode } = useContext(ThemeContext);
 
+  // callback functions to update stocks from children components
   const updateStock = async (stock) => {
     setStock(stock);
   };
-
   const updateQuote = async (stock) => {
     setQuote(stock);
   };
-
-
 
   return (
     <div

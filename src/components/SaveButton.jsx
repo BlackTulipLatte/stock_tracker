@@ -1,14 +1,11 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext } from "react";
 import { BookmarkIcon } from "@heroicons/react/solid";
 import ThemeContext from "../context/ThemeContext";
-import { auth, provider } from "../util/FirebaseConfig";
-import { signInWithPopup } from "firebase/auth";
 import { toast } from "react-toastify";
-import { getDatabase, ref, set, push, get } from "firebase/database";
+import { getDatabase, ref, set, get } from "firebase/database";
 
 const SaveButton = ({ isLoggedIn, stockToBeSaved, UID }) => {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
-  const [value, setValue] = useState("");
 
   // Function: writeUserData
   // Purpose: Write the stock data to the database
@@ -45,7 +42,6 @@ const SaveButton = ({ isLoggedIn, stockToBeSaved, UID }) => {
       console.log("Error appending data:", error);
     }
   }
-  
 
   // Function: handleClick
   // Purpose: Handle the click event for the save button
@@ -71,16 +67,16 @@ const SaveButton = ({ isLoggedIn, stockToBeSaved, UID }) => {
       className={`rounded-lg border-1 border-neutral-400 p-2 
                   absolute right-64 xl:right-64 shadow-lg 
                   ${darkMode ? "shadow-gray-100" : null}`}
-      onClick={handleClick} // Pass the function reference without invoking it
-    >
+      onClick={handleClick}>
+      
       <BookmarkIcon
         className={`h-8 w-8 cursor-pointer stroke-1 fill-none stroke-neutral-400
                     ${
                       darkMode
                         ? "fill-yellow-500 stroke-yellow-400"
                         : "fill-none stroke-neutral-400"
-                    }`}
-      />
+                    }`}/>
+
     </button>
   );
 };
