@@ -10,7 +10,10 @@ const SaveButton = ({ isLoggedIn, stockToBeSaved, UID }) => {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
   const [value, setValue] = useState("");
 
-  // writes to the firebase database
+  // Function: writeUserData
+  // Purpose: Write the stock data to the database
+  // Parameters: userId, stock
+  // Returns: None
   async function writeUserData(userId, stock) {
     const db = getDatabase();
     const stockObj = { stock };
@@ -21,24 +24,33 @@ const SaveButton = ({ isLoggedIn, stockToBeSaved, UID }) => {
       const snapshot = await get(userRef);
       const currentData = snapshot.val() || {}; // If no data exists, initialize as an empty object
   
-      // Check if stock_obj already exists
-      const stockArray = currentData.stock_obj ? currentData.stock_obj : [];
+      // Check if stock_arr already exists
+      const stockArray = currentData.stock_arr ? currentData.stock_arr : [];
+  
+      const stockSaved = stockArray.some((item) => item.stock.ticker === stock.ticker);
   
       // Append the new stock object to the stock array
-      stockArray.push(stockObj);
+      if (!stockSaved) {
+        toast.success("Stock saved");
+        stockArray.push(stockObj);
+      } else {
+        toast.error("Stock already saved");
+      }
   
-      // Set the updated stock array back to the database
-      set(userRef, {
-        stock_obj: stockArray,
+      // Set the updated stock array back to the database and wait for it to complete
+      await set(userRef, {
+        stock_arr: stockArray,
       });
-  
-      console.log("Data appended successfully!");
     } catch (error) {
       console.log("Error appending data:", error);
     }
   }
+  
 
-  // handle save button click
+  // Function: handleClick
+  // Purpose: Handle the click event for the save button
+  // Parameters: None
+  // Returns: None
   const handleClick = () => {
     if (!isLoggedIn) {
       toast.error("Please login to save stocks");
@@ -48,7 +60,6 @@ const SaveButton = ({ isLoggedIn, stockToBeSaved, UID }) => {
       if (stockToBeSaved.length === 0) {
         toast.error("Please choose a valid stock");
       } else {
-        toast.success("Stock saved");
         console.log(stockToBeSaved);
         writeUserData(UID, stockToBeSaved);
       }

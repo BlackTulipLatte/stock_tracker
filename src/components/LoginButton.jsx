@@ -15,6 +15,10 @@ const Login = ({ loginFunc, UIDFunc }) => {
   const [value, setValue] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
+  // Function: handleClick
+  // Purpose: Handle the click event for the login button
+  // Parameters: None
+  // Returns: None
   const handleClick = () => {
     if (isLoggedIn) {
       setPersistence(auth, browserLocalPersistence)
