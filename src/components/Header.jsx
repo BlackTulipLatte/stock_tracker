@@ -4,16 +4,15 @@ import Themeicon from './Themeicon';
 import Login from './LoginButton';
 import SaveButton from './SaveButton';
 import {useState} from 'react'
-import { set } from 'firebase/database';
 
 const Header = ({ name, stockCallback, quoteCallback, stockToBeSaved }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [UID, setUID] = useState("");
 
+  // callback functions to update login information from children components
   const updateLogin = async (state) => {
     setLoggedIn(state);
   };
-
   const updateUID = async (uid) => {
     setUID(uid);
   };

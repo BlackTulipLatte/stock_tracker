@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { mockSearchResults } from "../constants/mock";
 import { XIcon, SearchIcon } from "@heroicons/react/solid";
 import SearchResults from "./SearchResult";
 import ThemeContext from "../context/ThemeContext";
