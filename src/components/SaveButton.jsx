@@ -15,7 +15,7 @@ const SaveButton = ({ isLoggedIn }) => {
       return;
     }
     else{
-      console.log("Saving stock");
+      toast.success("Stock saved");
     }
   };
 

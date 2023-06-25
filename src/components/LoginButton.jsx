@@ -2,14 +2,18 @@ import React, { useEffect, useState, useContext } from "react";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import ThemeContext from "../context/ThemeContext";
 import { auth, provider } from "../util/FirebaseConfig";
-import { signInWithPopup, setPersistence, browserLocalPersistence } from "firebase/auth";
+import {
+  signInWithPopup,
+  setPersistence,
+  browserLocalPersistence,
+  getAuth
+} from "firebase/auth";
 import { toast } from "react-toastify";
 
-const Login = ({loginFunc}) => {
+const Login = ({ loginFunc }) => {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
   const [value, setValue] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const handleClick = () => {
     if (isLoggedIn) {
@@ -18,21 +22,22 @@ const Login = ({loginFunc}) => {
           return signInWithPopup(auth, provider);
         })
         .then((data) => {
+          const user = getAuth().currentUser;
           setValue(data.user.email);
           localStorage.setItem("email", data.user.email);
-          setIsLoggedIn(false); // Update the isLoggedIn state to true
+          setIsLoggedIn(false);
           toast.success("Successfully logged in");
-          loginFunc(); // Call the loginFunc to notify the parent component about the login
+          loginFunc(isLoggedIn); // Pass isLoggedIn as true to the parent component
         })
         .catch((error) => {
           console.log("Error signing in with popup:", error);
           toast.error("Error signing in");
         });
-    } else {
+    } 
+    else {
       toast.error("Already logged in");
     }
   };
-  
 
   useEffect(() => {
     const storedEmail = localStorage.getItem("email");
@@ -40,7 +45,6 @@ const Login = ({loginFunc}) => {
   }, []);
 
   useEffect(() => {
-    // Check if user is logged in on component mount
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setIsLoggedIn(true);
@@ -50,7 +54,6 @@ const Login = ({loginFunc}) => {
     });
 
     return () => {
-      // Unsubscribe from the onAuthStateChanged listener when component unmounts
       unsubscribe();
     };
   }, []);
