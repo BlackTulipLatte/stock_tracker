@@ -1,16 +1,19 @@
 import React from "react";
 import { useState, useContext } from "react";
 import { mockCompanyDetails } from "../constants/mock";
-import Header from "./Header";
-import Details from "./Details";
-import Overview from "./Overview";
-import Chart from "./Chart";
-import Search from "./Search";
+import Header from "../components/Header";
+import Details from "../components/Details";
+import Overview from "../components/Overview";
+import Chart from "../components/Chart";
+import Search from "../components/Search";
 import ThemeContext from "../context/ThemeContext";
 
 const Dashboard = () => {
+
+  //use state for all important variables
   const [stock, setStock] = useState([]);
   const [quote, setQuote] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const { darkMode } = useContext(ThemeContext);
 
@@ -22,19 +25,24 @@ const Dashboard = () => {
     setQuote(stock);
   };
 
+  const updateLoggedIn = () => {
+    setLoggedIn(!loggedIn);
+  };
+
   return (
     <div
       className={`h-screen grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid-rows-8 md:grid-rows-7 xl:grid-rows-5 auto-rows-fr gap-6 p-10 font-quicksand ${
         darkMode ? "bg-gray-900 text-gray-300" : "bg-neutral-100"
       }`}
     >
-      <div className="col-span-1 md:col-span-2 xl-col-span-3 row-span-1 flex justify-start items-center">
-        <Header
-          name={stock.name}
-          stockCallback={updateStock}
-          quoteCallback={updateQuote}
-        />
-      </div>
+        <div className="col-span-1 md:col-span-2 xl-col-span-3 row-span-1 flex justify-start items-center">
+          <Header
+            name={stock.name}
+            stockCallback={updateStock}
+            quoteCallback={updateQuote}
+            isLoggedIn = {loggedIn}
+          />
+        </div>
       <div className="md:col-span-2 row-span-4">
         <Chart />
       </div>

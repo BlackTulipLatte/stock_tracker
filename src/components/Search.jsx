@@ -3,7 +3,7 @@ import { mockSearchResults } from "../constants/mock";
 import { XIcon, SearchIcon } from "@heroicons/react/solid";
 import SearchResults from "./SearchResult";
 import ThemeContext from "../context/ThemeContext";
-import { searchStock, searchQuote } from "./helpers/API";
+import { searchStock, searchQuote } from "../util/API";
 
 const Search = ({ stockCallback, quoteCallback }) => {
   const [input, setInput] = useState("");
