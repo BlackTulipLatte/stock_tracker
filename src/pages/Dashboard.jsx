@@ -1,19 +1,48 @@
 import React from "react";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Header from "../components/Header";
 import Details from "../components/Details";
 import Overview from "../components/Overview";
 import Chart from "../components/Chart";
 import Search from "../components/Search";
 import ThemeContext from "../context/ThemeContext";
+import StockContext from "../context/StockContext";
+import { searchQuote, searchStock } from "../util/API";
 
 const Dashboard = () => {
 
   //use state for all important variables
-  const [stock, setStock] = useState([]);
+  const [stock, setStock] = useState({});
   const [quote, setQuote] = useState([]);
 
   const { darkMode } = useContext(ThemeContext);
+  
+  const { stockSymbol } = useContext(StockContext);
+
+  useEffect(() => {
+    const updateStockDetails = async () => {
+      try {
+        const result = await searchStock(stockSymbol);
+        setStock(result);
+      }
+      catch(error) {
+        setStock({})
+        console.log(error)
+      }
+    }; 
+  const updateStockOverview = async () => {
+    try {
+      const result = searchQuote(stockSymbol);
+      setQuote(result);
+    }
+    catch(error){
+      setQuote({});
+      console.log(error);
+    }
+  }
+  updateStockDetails();
+  updateStockOverview();
+}, [stockSymbol]);
 
   // callback functions to update stocks from children components
   const updateStock = async (stock) => {
