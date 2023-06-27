@@ -47,8 +47,8 @@
           .catch((error) => {
             setIsLoggedIn(false);
             loginFunc(isLoggedIn);
-            console.log("Error signing in with popup:", error);
-            toast.error("Error signing in");
+            //console.log("Error signing in with popup:", error);
+            //toast.error("Error signing in");
           });
       } 
       else {
