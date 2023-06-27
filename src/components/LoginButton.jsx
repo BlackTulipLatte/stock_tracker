@@ -1,68 +1,77 @@
-import React, { useEffect, useState, useContext } from "react";
-import { LockClosedIcon } from "@heroicons/react/solid";
-import ThemeContext from "../context/ThemeContext";
-import { auth, provider } from "../util/FirebaseConfig";
-import {
-  signInWithPopup,
-  setPersistence,
-  browserLocalPersistence,
-  getAuth
-} from "firebase/auth";
-import { toast } from "react-toastify";
+  import React, { useEffect, useState, useContext } from "react";
+  import { LockClosedIcon } from "@heroicons/react/solid";
+  import ThemeContext from "../context/ThemeContext";
+  import { auth, provider } from "../util/FirebaseConfig";
+  import {
+    signInWithPopup,
+    setPersistence,
+    browserLocalPersistence,
+    browserSessionPersistence,
+    inMemoryPersistence,
+    getAuth
+  } from "firebase/auth";
+  import { toast } from "react-toastify";
 
-const Login = ({ loginFunc, UIDFunc }) => {
-  const { darkMode, setDarkMode } = useContext(ThemeContext);
-  const [value, setValue] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const Login = ({ loginFunc, UIDFunc }) => {
+    const { darkMode, setDarkMode } = useContext(ThemeContext);
+    const [value, setValue] = useState("");
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Function: handleClick
-  // Purpose: Handle the click event for the login button
-  // Parameters: None
-  // Returns: None
-  const handleClick = () => {
-    if (isLoggedIn) {
-      setPersistence(auth, browserLocalPersistence)
-        .then(() => {
-          return signInWithPopup(auth, provider);
-        })
-        .then((data) => {
-          const user = getAuth().currentUser;
-          setValue(data.user.email);
-          localStorage.setItem("email", data.user.email);
-          setIsLoggedIn(false);
-          toast.success("Successfully logged in");
-          console.log(user.uid) // testing to see if user is authed
-          loginFunc(isLoggedIn); // Pass isLoggedIn as true to the parent component
-          UIDFunc(user.uid); // Pass UID to the parent component
-        })
-        .catch((error) => {
-          console.log("Error signing in with popup:", error);
-          toast.error("Error signing in");
-        });
-    } 
-    else {
-      toast.error("Already logged in");
-    }
-  };
-
-  useEffect(() => {
-    const storedEmail = localStorage.getItem("email");
-    setValue(storedEmail);
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setIsLoggedIn(true);
-      } else {
-        setIsLoggedIn(false);
+    // Function: handleClick
+    // Purpose: Handle the click event for the login button
+    // Parameters: None
+    // Returns: None
+    const handleClick = () => {
+      if (!isLoggedIn) {
+        setPersistence(auth, inMemoryPersistence)
+          .then(() => {
+            return signInWithPopup(auth, provider);
+          })
+          .then((data) => {
+            const user = getAuth().currentUser;
+            if(user){
+              setIsLoggedIn(true);
+              loginFunc(isLoggedIn); // Pass isLoggedIn as true to the parent component
+              UIDFunc(user.uid); // Pass UID to the parent component
+            }
+            else{
+              setIsLoggedIn(false);
+              return;
+            }
+            setValue(data.user.email);
+            localStorage.setItem("email", data.user.email);
+            toast.success("Successfully logged in");
+          })
+          .catch((error) => {
+            setIsLoggedIn(false);
+            loginFunc(isLoggedIn);
+            console.log("Error signing in with popup:", error);
+            toast.error("Error signing in");
+          });
+      } 
+      else {
+        toast.error("Already logged in");
       }
-    });
-
-    return () => {
-      unsubscribe();
     };
-  }, []);
+
+    useEffect(() => {
+      const storedEmail = localStorage.getItem("email");
+      setValue(storedEmail);
+    }, []);
+
+    useEffect(() => {
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+        if (user) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      });
+
+      return () => {
+        unsubscribe();
+      };
+    }, []);
 
   return (
     <button

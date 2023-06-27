@@ -8,7 +8,7 @@ const SavedPageButton = ({isLoggedIn}) => {
   const {darkMode, setDarkMode} = useContext(ThemeContext);
 
   const handleClick = () => {
-    if(isLoggedIn){
+    if(!isLoggedIn){
         window.location.href = "/saved";
     }
     else{

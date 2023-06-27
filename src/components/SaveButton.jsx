@@ -48,7 +48,7 @@ const SaveButton = ({ isLoggedIn, stockToBeSaved, UID }) => {
   // Parameters: None
   // Returns: None
   const handleClick = () => {
-    if (!isLoggedIn) {
+    if (isLoggedIn) {
       toast.error("Please login to save stocks");
       return;
     } else {
