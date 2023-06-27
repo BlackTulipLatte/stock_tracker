@@ -31,16 +31,16 @@
             const user = getAuth().currentUser;
             if(user){
               setIsLoggedIn(true);
+              loginFunc(isLoggedIn); // Pass isLoggedIn as true to the parent component
+              UIDFunc(user.uid); // Pass UID to the parent component
             }
             else{
               setIsLoggedIn(false);
+              return;
             }
             setValue(data.user.email);
             localStorage.setItem("email", data.user.email);
             toast.success("Successfully logged in");
-            console.log(user.uid) // testing to see if user is authed
-            loginFunc(isLoggedIn); // Pass isLoggedIn as true to the parent component
-            UIDFunc(user.uid); // Pass UID to the parent component
           })
           .catch((error) => {
             setIsLoggedIn(false);
