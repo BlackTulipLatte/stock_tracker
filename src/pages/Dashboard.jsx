@@ -8,7 +8,8 @@ import Search from "../components/Search";
 import ThemeContext from "../context/ThemeContext";
 import StockContext from "../context/StockContext";
 import { searchQuote, searchStock } from "../util/API";
-
+import Timer from "../components/Timer";
+import IsMarketOpen from "../components/Timer";
 const Dashboard = () => {
 
   //use state for all important variables
@@ -51,6 +52,8 @@ const Dashboard = () => {
   const updateQuote = async (stock) => {
     setQuote(stock);
   };
+  
+IsMarketOpen();
 
   return (
     <div

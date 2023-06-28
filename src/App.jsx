@@ -8,7 +8,7 @@ import StockContext from "./context/StockContext";
 import "react-toastify/dist/ReactToastify.css";
 function App() {
   const [darkMode, setDarkMode] = useState(false);
-  const [stockSymbol, setStockSymbol] = useState("AMZN");
+  const [stockSymbol, setStockSymbol] = useState("");
   return (
     <>
       <Routes>
@@ -24,7 +24,17 @@ function App() {
         />
         <Route path="/saved" element={<SavedStocks />} />
       </Routes>
-      <ToastContainer />
+      <ToastContainer
+        position='bottom-left' 
+        autoClose={2700}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover 
+      />
     </>
   );
 }
