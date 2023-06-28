@@ -3,6 +3,7 @@ import { XIcon, SearchIcon } from "@heroicons/react/solid";
 import SearchResults from "./SearchResult";
 import ThemeContext from "../context/ThemeContext";
 import { searchStock, searchQuote } from "../util/API";
+import { searchSymbols } from "../util/API";
 
 const Search = ({ stockCallback, quoteCallback }) => {
   const [input, setInput] = useState("");

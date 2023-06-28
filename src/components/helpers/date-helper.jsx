@@ -1,5 +1,5 @@
 // convertDatetoUnixTimeStamp converts date in miliseconds to Unix time stamp
-export const convertDatetoUnixTimestamp = (date) => {
+export const convertDateToUnixTimestamp = (date) => {
   return Math.floor(date.getTime() / 1000);
 };
 
@@ -13,4 +13,5 @@ export const createDate = (date, days, weeks, months, years) => {
   newDate.setDate(newDate.getDate() + days + 7 * weeks);
   newDate.setMonth(newDate.getMonth() + months);
   newDate.setFullYear(newDate.getFullYear() + years);
+  return newDate;
 };
