@@ -22,6 +22,7 @@
     // Parameters: None
     // Returns: None
     const handleClick = () => {
+      console.log(isLoggedIn);
       if (!isLoggedIn) {
         setPersistence(auth, inMemoryPersistence)
           .then(() => {
@@ -31,16 +32,17 @@
             const user = getAuth().currentUser;
             if(user){
               setIsLoggedIn(true);
+              console.log("User signed in successfully");
               loginFunc(isLoggedIn); // Pass isLoggedIn as true to the parent component
               UIDFunc(user.uid); // Pass UID to the parent component
+              setValue(data.user.email);
+              localStorage.setItem("email", data.user.email);
+              toast.success("Successfully logged in");
             }
             else{
               setIsLoggedIn(false);
               return;
             }
-            setValue(data.user.email);
-            localStorage.setItem("email", data.user.email);
-            toast.success("Successfully logged in");
           })
           .catch((error) => {
             setIsLoggedIn(false);
