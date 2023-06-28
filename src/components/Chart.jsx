@@ -18,11 +18,11 @@ import ThemeContext from "../context/ThemeContext";
 import { getHistoricalData } from "../util/API";
 import StockContext from "../context/StockContext";
 
-const Chart = () => {
+const Chart = ( { stockTicker }) => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState("1D");
   const { darkMode } = useContext(ThemeContext);
-  const {stockSymbol} = useContext(StockContext);
+  const stockSymbol = stockTicker;
 
   useEffect(() => {
     const getDateRange = () => {

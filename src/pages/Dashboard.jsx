@@ -67,7 +67,7 @@ const Dashboard = () => {
           />
         </div>
       <div className="md:col-span-2 row-span-4">
-        <Chart />
+        <Chart stockTicker={stock.ticker}/>
       </div>
       <div>
         <Overview
