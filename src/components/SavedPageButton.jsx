@@ -3,16 +3,16 @@ import { DatabaseIcon } from '@heroicons/react/solid';
 import ThemeContext from '../context/ThemeContext';
 import { toast } from 'react-toastify';
 
-const SavedPageButton = ({isLoggedIn}) => {
+const SavedPageButton = ({UID}) => {
 
   const {darkMode, setDarkMode} = useContext(ThemeContext);
 
   const handleClick = () => {
-    if(!isLoggedIn){
-        window.location.href = "/saved";
+    if(UID===""){
+        toast.error("Log in to view your saved stocks");
     }
     else{
-        toast.error("Log in to view your saved stocks");
+        window.location.href = "/saved";
     }
   };
 

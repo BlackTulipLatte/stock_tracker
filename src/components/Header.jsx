@@ -23,7 +23,7 @@ const Header = ({ name, stockCallback, quoteCallback, stockToBeSaved }) => {
       <h1 className="text-5xl">{name}</h1>
       <Search stockCallback={stockCallback} quoteCallback={quoteCallback} UID={UID}/>  
     </div>
-    <SavedPageButton isLoggedIn={loggedIn}/>
+    <SavedPageButton UID={UID}/>
     <SaveButton isLoggedIn={loggedIn} stockToBeSaved={stockToBeSaved} UID={UID}/>
     <Themeicon/>
     <Login loginFunc={updateLogin} UIDFunc={updateUID}/>
