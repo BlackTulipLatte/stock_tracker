@@ -65,7 +65,7 @@ const SaveButton = ({ isLoggedIn, stockToBeSaved, UID }) => {
 
   return (
     <>
-    <h1>Logged in as {UID}</h1>
+    <h1 className="ml-5 mt-12">Logged in as: {UID}</h1>
     <button
       className={`rounded-lg border-1 border-neutral-400 p-2 
                   absolute right-64 xl:right-64 shadow-lg 
