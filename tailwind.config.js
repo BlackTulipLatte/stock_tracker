@@ -10,7 +10,7 @@ module.exports = {
         1: "1px",
       },
       fontFamily: {
-        quicksand: ["Quicksand", "sans-serif"],
+        ubuntu: ["Ubuntu", "sans-serif"],
       },
       gridTemplateRows: {
         7: "repeat(7, minmax(0, 1fr))",

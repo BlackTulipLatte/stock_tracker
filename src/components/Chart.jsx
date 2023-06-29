@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
-import { 
+import {
   convertUnixTimestampToDate,
   convertDateToUnixTimestamp,
-  createDate, } from "./helpers/date-helper";
+  createDate,
+} from "./helpers/date-helper";
 import Card from "./Card";
 import ChartFilter from "./ChartFilter";
 import {
@@ -18,7 +19,7 @@ import ThemeContext from "../context/ThemeContext";
 import { getHistoricalData } from "../util/API";
 import StockContext from "../context/StockContext";
 
-const Chart = ( { stockTicker }) => {
+const Chart = ({ stockTicker }) => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState("1D");
   const { darkMode } = useContext(ThemeContext);
@@ -26,25 +27,29 @@ const Chart = ( { stockTicker }) => {
 
   useEffect(() => {
     const getDateRange = () => {
-      const {days, weeks, months, years} = chartConfig[filter];
-      
+      const { days, weeks, months, years } = chartConfig[filter];
+
       const endDate = new Date();
       const startDate = createDate(endDate, -days, -weeks, -months, -years);
 
       const startTimestampUnix = convertDateToUnixTimestamp(startDate);
       const endTimestampUnix = convertDateToUnixTimestamp(endDate);
-      return { startTimestampUnix, endTimestampUnix };    
+      return { startTimestampUnix, endTimestampUnix };
     };
 
     const updateChartData = async () => {
       try {
-        const {startTimestampUnix, endTimestampUnix} = getDateRange();
+        const { startTimestampUnix, endTimestampUnix } = getDateRange();
         const resolution = chartConfig[filter].resolution;
-        const result = await getHistoricalData(stockSymbol, resolution, startTimestampUnix, endTimestampUnix);
+        const result = await getHistoricalData(
+          stockSymbol,
+          resolution,
+          startTimestampUnix,
+          endTimestampUnix
+        );
         setData(formatData(result));
-      }
-      catch(error) {
-        setData([])
+      } catch (error) {
+        setData([]);
         console.log(error);
       }
     };

@@ -11,13 +11,12 @@ import { searchQuote, searchStock } from "../util/API";
 import Timer from "../components/Timer";
 import IsMarketOpen from "../components/Timer";
 const Dashboard = () => {
-
   //use state for all important variables
   const [stock, setStock] = useState({});
   const [quote, setQuote] = useState([]);
 
   const { darkMode } = useContext(ThemeContext);
-  
+
   const { stockSymbol } = useContext(StockContext);
 
   useEffect(() => {
@@ -25,25 +24,23 @@ const Dashboard = () => {
       try {
         const result = await searchStock(stockSymbol);
         setStock(result);
+      } catch (error) {
+        setStock({});
+        console.log(error);
       }
-      catch(error) {
-        setStock({})
-        console.log(error)
+    };
+    const updateStockOverview = async () => {
+      try {
+        const result = searchQuote(stockSymbol);
+        setQuote(result);
+      } catch (error) {
+        setQuote({});
+        console.log(error);
       }
-    }; 
-  const updateStockOverview = async () => {
-    try {
-      const result = searchQuote(stockSymbol);
-      setQuote(result);
-    }
-    catch(error){
-      setQuote({});
-      console.log(error);
-    }
-  }
-  updateStockDetails();
-  updateStockOverview();
-}, [stockSymbol]);
+    };
+    updateStockDetails();
+    updateStockOverview();
+  }, [stockSymbol]);
 
   // callback functions to update stocks from children components
   const updateStock = async (stock) => {
@@ -52,25 +49,25 @@ const Dashboard = () => {
   const updateQuote = async (stock) => {
     setQuote(stock);
   };
-  
-IsMarketOpen();
+
+  IsMarketOpen();
 
   return (
     <div
-      className={`h-screen grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid-rows-8 md:grid-rows-7 xl:grid-rows-5 auto-rows-fr gap-6 p-10 font-quicksand ${
-        darkMode ? "bg-gray-900 text-gray-300" : "bg-neutral-100"
+      className={`h-screen grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid-rows-8 md:grid-rows-7 xl:grid-rows-5 auto-rows-fr gap-6 p-10 font-ubuntu ${
+        darkMode ? "bg-neutral-900 text-neutral-300" : "bg-neutral-100"
       }`}
     >
-        <div className="col-span-1 md:col-span-2 xl-col-span-3 row-span-1 flex justify-start items-center">
-          <Header
-            name={stock.name}
-            stockCallback={updateStock}
-            quoteCallback={updateQuote}
-            stockToBeSaved={stock}
-          />
-        </div>
+      <div className="col-span-1 md:col-span-2 xl-col-span-3 row-span-1 flex justify-start items-center">
+        <Header
+          name={stock.name}
+          stockCallback={updateStock}
+          quoteCallback={updateQuote}
+          stockToBeSaved={stock}
+        />
+      </div>
       <div className="md:col-span-2 row-span-4">
-        <Chart stockTicker={stock.ticker}/>
+        <Chart stockTicker={stock.ticker} />
       </div>
       <div>
         <Overview
