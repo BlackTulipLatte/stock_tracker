@@ -6,7 +6,17 @@ import SaveButton from "./SaveButton";
 import SavedPageButton from "./SavedPageButton";
 import { useState } from "react";
 
-const Header = ({ name, stockCallback, quoteCallback, stockToBeSaved }) => {
+const Header = ({
+  name,
+  stockCallback,
+  quoteCallback,
+  stockToBeSaved,
+  symbol,
+  price,
+  change,
+  changePercent,
+  currency,
+}) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [UID, setUID] = useState("");
 
@@ -21,7 +31,25 @@ const Header = ({ name, stockCallback, quoteCallback, stockToBeSaved }) => {
   return (
     <>
       <div className="x1:px-32">
-        <h1 className="text-5xl">{name}</h1>
+        <div className="w-full h-full flex items-center justify-around">
+          <h1 className="text-5xl">
+            {name} ({symbol})
+          </h1>
+          <span className="relative left-5 text-2xl xl:text-4xl 2xl:text-5xl flex items-center">
+            ${price}
+            <span className="text-lg xl:text-xl 2xl:text-2xl text-neutral-400 m-2">
+              {" "}
+              {currency}
+            </span>
+          </span>
+          <span
+            className={`relative left-9 text-lg xl:text-2xl 2xl:text-3xl ${
+              change > 0 ? "text-lime-500" : "text-red-500"
+            }`}
+          >
+            {change} <span>({changePercent})%</span>
+          </span>
+        </div>
         <Search
           stockCallback={stockCallback}
           quoteCallback={quoteCallback}
