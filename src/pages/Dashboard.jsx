@@ -2,7 +2,6 @@ import React from "react";
 import { useState, useContext, useEffect } from "react";
 import Header from "../components/Header";
 import Details from "../components/Details";
-import Overview from "../components/Overview";
 import Chart from "../components/Chart";
 import Search from "../components/Search";
 import ThemeContext from "../context/ThemeContext";
@@ -64,19 +63,15 @@ const Dashboard = () => {
           stockCallback={updateStock}
           quoteCallback={updateQuote}
           stockToBeSaved={stock}
-        />
-      </div>
-      <div className="md:col-span-2 row-span-4">
-        <Chart stockTicker={stock.ticker} />
-      </div>
-      <div>
-        <Overview
-          symbol={stock.name}
+          symbol={stock.ticker}
           price={quote.c}
           change={quote.d}
           changePercent={quote.dp}
           currency={stock.currency}
         />
+      </div>
+      <div className="md:col-span-2 row-span-4">
+        <Chart stockTicker={stock.ticker} />
       </div>
       <div className="row-span-2 xl:row-span-3">
         <Details details={stock} />
