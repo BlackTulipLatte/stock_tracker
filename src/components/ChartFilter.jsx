@@ -7,9 +7,9 @@ const ChartFilter = ({ text, active, onClick }) => {
       className={`w-12 m-1 h-8 border-1 rounded-md flex items-center justify-center cursor-pointer 
       ${
         active
-          ? "bg-indigo-600 border-indigo-700 text-gray-100"
-          : "border-indigo-300 text-indigo-300"
-      } transition duration-200 hover:bg-indigo-600 hover:text-gray-100 hover:border-indigo-700`}
+          ? "bg-yellow-500 border-yellow-900 text-gray-100"
+          : "border-yellow-500 text-yellow-500"
+      } transition duration-300 hover:ring-2 ring-yellow-400`}
     >
       {text}
     </button>

@@ -77,7 +77,7 @@
     <button
       className={`rounded-lg border-1 border-neutral-400 p-2 
                   absolute right-8 xl:right-12 shadow-lg 
-                  ${darkMode ? "shadow-gray-100" : null
+                  ${darkMode ? "shadow-gray-500" : null
                 } transition duration-300 hover:scale-125`}
       onClick={handleClick}
     >

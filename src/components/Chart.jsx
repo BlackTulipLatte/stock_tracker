@@ -83,12 +83,12 @@ const Chart = ( { stockTicker }) => {
             <linearGradient id="chartColour" x1="0" y1="0" x2="0" y2="1">
               <stop
                 offset="5%"
-                stopColor={darkMode ? "#312e81" : "rgb(199 210 254)"}
+                stopColor={darkMode ? "#ba9800" : "#ffd000"}
                 stopOpacity={0.8}
               />
               <stop
                 offset="95%"
-                stopColor={darkMode ? "#312e81" : "rgb(199 210 254)"}
+                stopColor={darkMode ? "#ba9800" : "#ffd000"}
                 stopOpacity={0}
               />
             </linearGradient>
@@ -96,14 +96,14 @@ const Chart = ( { stockTicker }) => {
           <Area
             type="monotone"
             dataKey="value"
-            stroke="#312e81"
+            stroke="#ba9800"
             fillOpacity={1}
             strokeWidth={0.5}
             fill="url(#chartColour)"
           ></Area>
           <Tooltip
-            contentStyle={darkMode ? { backgroundColor: "#111827" } : null}
-            itemStyle={darkMode ? { color: "#818cf8" } : null}
+            contentStyle={darkMode ? { backgroundColor: "#272411" } : null}
+            itemStyle={darkMode ? { color: "#f8e681" } : null}
           />
           <XAxis dataKey={"date"} />
           <YAxis domain={["dataMin", "dataMax"]} />
