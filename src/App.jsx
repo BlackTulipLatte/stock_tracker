@@ -15,7 +15,7 @@ function App() {
           path="/"
           element={
             <ThemeContext.Provider value={{ darkMode, setDarkMode }}>
-              <StockContext.Provider value={{stockSymbol, setStockSymbol}}>
+              <StockContext.Provider value={{ stockSymbol, setStockSymbol }}>
                 <Dashboard />
               </StockContext.Provider>
             </ThemeContext.Provider>
@@ -23,7 +23,7 @@ function App() {
         />
       </Routes>
       <ToastContainer
-        position='bottom-left' 
+        position="bottom-left"
         autoClose={2700}
         hideProgressBar={false}
         newestOnTop={false}
@@ -31,7 +31,7 @@ function App() {
         rtl={false}
         pauseOnFocusLoss
         draggable
-        pauseOnHover 
+        pauseOnHover
       />
     </>
   );

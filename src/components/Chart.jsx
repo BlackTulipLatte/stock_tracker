@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
-import { 
+import {
   convertUnixTimestampToDate,
   convertDateToUnixTimestamp,
-  createDate, } from "./helpers/date-helper";
+  createDate,
+} from "./helpers/date-helper";
 import Card from "./Card";
 import ChartFilter from "./ChartFilter";
 import {
@@ -18,7 +19,7 @@ import ThemeContext from "../context/ThemeContext";
 import { getHistoricalData } from "../util/API";
 import StockContext from "../context/StockContext";
 
-const Chart = ( { stockTicker }) => {
+const Chart = ({ stockTicker }) => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState("1D");
   const { darkMode } = useContext(ThemeContext);
@@ -26,25 +27,29 @@ const Chart = ( { stockTicker }) => {
 
   useEffect(() => {
     const getDateRange = () => {
-      const {days, weeks, months, years} = chartConfig[filter];
-      
+      const { days, weeks, months, years } = chartConfig[filter];
+
       const endDate = new Date();
       const startDate = createDate(endDate, -days, -weeks, -months, -years);
 
       const startTimestampUnix = convertDateToUnixTimestamp(startDate);
       const endTimestampUnix = convertDateToUnixTimestamp(endDate);
-      return { startTimestampUnix, endTimestampUnix };    
+      return { startTimestampUnix, endTimestampUnix };
     };
 
     const updateChartData = async () => {
       try {
-        const {startTimestampUnix, endTimestampUnix} = getDateRange();
+        const { startTimestampUnix, endTimestampUnix } = getDateRange();
         const resolution = chartConfig[filter].resolution;
-        const result = await getHistoricalData(stockSymbol, resolution, startTimestampUnix, endTimestampUnix);
+        const result = await getHistoricalData(
+          stockSymbol,
+          resolution,
+          startTimestampUnix,
+          endTimestampUnix
+        );
         setData(formatData(result));
-      }
-      catch(error) {
-        setData([])
+      } catch (error) {
+        setData([]);
         console.log(error);
       }
     };
@@ -83,12 +88,12 @@ const Chart = ( { stockTicker }) => {
             <linearGradient id="chartColour" x1="0" y1="0" x2="0" y2="1">
               <stop
                 offset="5%"
-                stopColor={darkMode ? "#312e81" : "rgb(199 210 254)"}
+                stopColor={darkMode ? "#ba9800" : "#ffd000"}
                 stopOpacity={0.8}
               />
               <stop
                 offset="95%"
-                stopColor={darkMode ? "#312e81" : "rgb(199 210 254)"}
+                stopColor={darkMode ? "#ba9800" : "#ffd000"}
                 stopOpacity={0}
               />
             </linearGradient>
@@ -96,14 +101,14 @@ const Chart = ( { stockTicker }) => {
           <Area
             type="monotone"
             dataKey="value"
-            stroke="#312e81"
+            stroke="#ba9800"
             fillOpacity={1}
             strokeWidth={0.5}
             fill="url(#chartColour)"
           ></Area>
           <Tooltip
-            contentStyle={darkMode ? { backgroundColor: "#111827" } : null}
-            itemStyle={darkMode ? { color: "#818cf8" } : null}
+            contentStyle={darkMode ? { backgroundColor: "#272411" } : null}
+            itemStyle={darkMode ? { color: "#f8e681" } : null}
           />
           <XAxis dataKey={"date"} />
           <YAxis domain={["dataMin", "dataMax"]} />

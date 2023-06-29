@@ -34,14 +34,16 @@ const Search = ({ stockCallback, quoteCallback }) => {
   return (
     <div
       className={`flex items-center my-4 border-2 rounded-md relative z-50 w-96 ${
-        darkMode ? "bg-gray-900 border-gray-800" : "bg-white border-neutral-200"
+        darkMode
+          ? "bg-neutral-900 border-neutral-800"
+          : "bg-white border-neutral-200"
       }`}
     >
       <input
         type="text "
         value={input}
         className={`w-full px-4 py-2 focus:outline-none rounded-md ${
-          darkMode ? "bg-gray-900" : null
+          darkMode ? "bg-neutral-900" : null
         }`}
         placeholder="Search stock..."
         onChange={(event) => {
@@ -58,7 +60,7 @@ const Search = ({ stockCallback, quoteCallback }) => {
 
       {input && (
         <button onClick={clear} className="m-1">
-          <XIcon className="h-4 w-4 fill-gray-500" />
+          <XIcon className="h-4 w-4 fill-neutral-500" />
         </button>
       )}
       <button
@@ -69,12 +71,11 @@ const Search = ({ stockCallback, quoteCallback }) => {
             updateQuote(input);
           }
         }}
-        className="h-8 w-8 bg-indigo-500 rounded-md flex justify-center items-center m-1 p-2 transition duration-300 hover:ring-2 ring-indigo-400"
+        className="h-8 w-8 bg-yellow-500 rounded-md flex justify-center items-center m-1 p-2 transition duration-300 hover:ring-2 ring-yellow-400"
       >
-        <SearchIcon className="h-4 w-4 fill-gray-100" />
+        <SearchIcon className="h-4 w-4 fill-neutral-100" />
       </button>
 
-      {/*// commented out the dropdown menu for now. will implement after getting initial api call to work*/}
       {/*{input && bestMatches.length > 0 ? <SearchResults results={bestMatches} /> : null}*/}
     </div>
   );

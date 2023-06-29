@@ -15,17 +15,19 @@ const SaveButton = ({ isLoggedIn, stockToBeSaved, UID }) => {
     const db = getDatabase();
     const stockObj = { stock };
     const userRef = ref(db, "users/" + userId);
-  
+
     try {
       // Retrieve the current data from the database
       const snapshot = await get(userRef);
       const currentData = snapshot.val() || {}; // If no data exists, initialize as an empty object
-  
+
       // Check if stock_arr already exists
       const stockArray = currentData.stock_arr ? currentData.stock_arr : [];
-  
-      const stockSaved = stockArray.some((item) => item.stock.ticker === stock.ticker);
-  
+
+      const stockSaved = stockArray.some(
+        (item) => item.stock.ticker === stock.ticker
+      );
+
       // Append the new stock object to the stock array
       if (!stockSaved) {
         toast.success("Stock saved");
@@ -33,7 +35,7 @@ const SaveButton = ({ isLoggedIn, stockToBeSaved, UID }) => {
       } else {
         toast.error("Stock already saved");
       }
-  
+
       // Set the updated stock array back to the database and wait for it to complete
       await set(userRef, {
         stock_arr: stockArray,
@@ -49,7 +51,7 @@ const SaveButton = ({ isLoggedIn, stockToBeSaved, UID }) => {
   // Returns: None
   const handleClick = () => {
     console.log(isLoggedIn);
-    if (UID==="") {
+    if (UID === "") {
       toast.error("Please login to save stocks");
       return;
     } else {
@@ -65,23 +67,24 @@ const SaveButton = ({ isLoggedIn, stockToBeSaved, UID }) => {
 
   return (
     <>
-    <h1 className="ml-5 mt-12">Logged in as: {UID}</h1>
-    <button
-      className={`rounded-lg border-1 border-neutral-400 p-2 
+      <h1 className="ml-5 mt-12">Logged in as: {UID}</h1>
+      <button
+        className={`rounded-lg border-1 border-neutral-400 p-2 
                   absolute right-64 xl:right-64 shadow-lg 
-                  ${darkMode ? "shadow-gray-100" : null
-                } transition duration-300 hover:scale-125`}
-      onClick={handleClick}>
-      
-      <BookmarkIcon
-        className={`h-8 w-8 cursor-pointer stroke-1 fill-none stroke-neutral-400
+                  ${
+                    darkMode ? "shadow-neutral-500" : null
+                  } transition duration-300 hover:scale-125`}
+        onClick={handleClick}
+      >
+        <BookmarkIcon
+          className={`h-8 w-8 cursor-pointer stroke-1 fill-none stroke-neutral-400
                     ${
                       darkMode
                         ? "fill-yellow-500 stroke-yellow-400"
                         : "fill-none stroke-neutral-400"
-                    }`}/>
-
-    </button>
+                    }`}
+        />
+      </button>
     </>
   );
 };
