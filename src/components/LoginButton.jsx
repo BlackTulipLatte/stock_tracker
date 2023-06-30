@@ -5,15 +5,13 @@ import { auth, provider } from "../util/FirebaseConfig";
 import {
   signInWithPopup,
   setPersistence,
-  browserLocalPersistence,
-  browserSessionPersistence,
   inMemoryPersistence,
   getAuth,
 } from "firebase/auth";
 import { toast } from "react-toastify";
 
 const Login = ({ loginFunc, UIDFunc }) => {
-  const { darkMode, setDarkMode } = useContext(ThemeContext);
+  const { darkMode } = useContext(ThemeContext);
   const [value, setValue] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 

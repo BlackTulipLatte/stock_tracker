@@ -5,6 +5,7 @@ import { Route, Routes, Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import StockContext from "./context/StockContext";
 import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [stockSymbol, setStockSymbol] = useState("TSLA");

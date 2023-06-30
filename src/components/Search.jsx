@@ -46,7 +46,6 @@ const Search = () => {
           setInput(event.target.value);
         }}
         onKeyDown={(event) => {
-          // differs from onKeypress as show in video
           if (event.key === "Enter") {
             updateBestMatches();
           }
