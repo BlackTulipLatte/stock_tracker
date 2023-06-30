@@ -53,3 +53,4 @@ export const getHistoricalData = async (
 
   return await response.json();
 };
+
