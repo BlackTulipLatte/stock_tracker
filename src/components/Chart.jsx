@@ -41,6 +41,7 @@ const Chart = ({ stockTicker }) => {
       try {
         const { startTimestampUnix, endTimestampUnix } = getDateRange();
         const resolution = chartConfig[filter].resolution;
+        console.log(resolution);
         const result = await getHistoricalData(
           stockSymbol,
           resolution,
