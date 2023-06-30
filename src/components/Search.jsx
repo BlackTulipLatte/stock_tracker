@@ -1,34 +1,30 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useState } from "react";
 import { XIcon, SearchIcon } from "@heroicons/react/solid";
+import { searchSymbol } from "../util/API";
 import SearchResults from "./SearchResult";
 import ThemeContext from "../context/ThemeContext";
-import { searchStock, searchQuote } from "../util/API";
-import { searchSymbols } from "../util/API";
 
-const Search = ({ stockCallback, quoteCallback }) => {
-  const [input, setInput] = useState("");
-  const [quote, setQuote] = useState([]);
-  const [bestMatches, setBestMatches] = useState([]);
-
+const Search = () => {
   const { darkMode } = useContext(ThemeContext);
+  const [input, setInput] = useState("");
+  const [bestMatches, setBestMatches] = useState([]);
 
   const clear = () => {
     setInput("");
     setBestMatches([]);
   };
 
-  const updateBestMatches = async (stock) => {
-    const results = await searchStock(stock.toUpperCase().trim());
-    setBestMatches(results);
-    stockCallback(results);
-    console.log(results);
-  };
-
-  const updateQuote = async (stock) => {
-    const results = await searchQuote(stock.toUpperCase().trim());
-    setQuote(results);
-    quoteCallback(results);
-    console.log(results);
+  const updateBestMatches = async () => {
+    try {
+      if (input) {
+        const searchResults = await searchSymbol(input);
+        const result = searchResults.result;
+        setBestMatches(result);
+      }
+    } catch (error) {
+      setBestMatches([]);
+      console.log(error);
+    }
   };
 
   return (
@@ -52,8 +48,7 @@ const Search = ({ stockCallback, quoteCallback }) => {
         onKeyDown={(event) => {
           // differs from onKeypress as show in video
           if (event.key === "Enter") {
-            updateBestMatches(input);
-            updateQuote(input);
+            updateBestMatches();
           }
         }}
       />
@@ -64,19 +59,15 @@ const Search = ({ stockCallback, quoteCallback }) => {
         </button>
       )}
       <button
-        onClick={(event) => {
-          if (event.button === 0) {
-            // Check if left mouse button was clicked
-            updateBestMatches(input);
-            updateQuote(input);
-          }
-        }}
-        className="h-8 w-8 bg-yellow-500 rounded-md flex justify-center items-center m-1 p-2 transition duration-300 hover:ring-2 ring-yellow-400"
+        onClick={updateBestMatches}
+        className="h-8 w-8 bg-yellow-500 rounded-md flex justify-center items-center m-1 p-2"
       >
         <SearchIcon className="h-4 w-4 fill-neutral-100" />
       </button>
 
-      {/*{input && bestMatches.length > 0 ? <SearchResults results={bestMatches} /> : null}*/}
+      {input && bestMatches.length > 0 ? (
+        <SearchResults results={bestMatches} />
+      ) : null}
     </div>
   );
 };

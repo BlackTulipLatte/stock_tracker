@@ -7,7 +7,7 @@ import StockContext from "./context/StockContext";
 import "react-toastify/dist/ReactToastify.css";
 function App() {
   const [darkMode, setDarkMode] = useState(false);
-  const [stockSymbol, setStockSymbol] = useState("");
+  const [stockSymbol, setStockSymbol] = useState("TSLA");
   return (
     <>
       <Routes>

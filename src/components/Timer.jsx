@@ -1,13 +1,13 @@
+import React from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 const checkTime = () => {
   const today = new Date();
   var hours = today.getHours();
   var minutes = today.getMinutes();
-  return (hours === 16 && minutes < 30) ||(hours < 16)
-}
+  return (hours === 16 && minutes < 30) || hours < 16;
+};
 
 const IsMarketOpen = () => {
   // if we are checking in before 16:00

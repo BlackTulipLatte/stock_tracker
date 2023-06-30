@@ -12,7 +12,7 @@ import IsMarketOpen from "../components/Timer";
 const Dashboard = () => {
   //use state for all important variables
   const [stock, setStock] = useState({});
-  const [quote, setQuote] = useState([]);
+  const [quote, setQuote] = useState({});
 
   const { darkMode } = useContext(ThemeContext);
 
@@ -30,7 +30,7 @@ const Dashboard = () => {
     };
     const updateStockOverview = async () => {
       try {
-        const result = searchQuote(stockSymbol);
+        const result = await searchQuote(stockSymbol);
         setQuote(result);
       } catch (error) {
         setQuote({});
@@ -63,8 +63,8 @@ const Dashboard = () => {
           stockCallback={updateStock}
           quoteCallback={updateQuote}
           stockToBeSaved={stock}
-          symbol={stock.ticker}
-          price={quote.c}
+          symbol={stockSymbol}
+          price={quote.pc}
           change={quote.d}
           changePercent={quote.dp}
           currency={stock.currency}
