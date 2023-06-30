@@ -1,6 +1,4 @@
-import React from "react";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const checkTime = () => {
   const today = new Date();
@@ -16,6 +14,7 @@ const IsMarketOpen = () => {
     toast.success("Market is open! Happy browsing! :)", {
       toastId: "open",
     });
+    return true;
   }
   // if we are checking during 16:00 but not past 16:30
   // otherwise we are closed
@@ -24,8 +23,8 @@ const IsMarketOpen = () => {
     toast.error("Market is closed! :(", {
       toastId: "closed",
     });
+    return false;
   }
-  return;
 };
 
 export default IsMarketOpen;

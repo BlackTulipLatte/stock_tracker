@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { getDatabase, ref, set, get } from "firebase/database";
 
 const SaveButton = ({ isLoggedIn, stockToBeSaved, UID }) => {
-  const { darkMode, setDarkMode } = useContext(ThemeContext);
+  const { darkMode } = useContext(ThemeContext);
 
   // Function: writeUserData
   // Purpose: Write the stock data to the database

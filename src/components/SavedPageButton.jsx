@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { DatabaseIcon } from "@heroicons/react/solid";
 import ThemeContext from "../context/ThemeContext";
 import { toast } from "react-toastify";
@@ -6,7 +6,7 @@ import { getDatabase, ref, child, get } from "firebase/database";
 import { saveAs } from "file-saver";
 
 const SavedPageButton = ({ UID }) => {
-  const { darkMode, setDarkMode } = useContext(ThemeContext);
+  const { darkMode } = useContext(ThemeContext);
 
   const handleClick = () => {
     if (UID === "") {

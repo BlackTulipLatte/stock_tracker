@@ -17,7 +17,6 @@ import {
 import { chartConfig } from "../constants/config";
 import ThemeContext from "../context/ThemeContext";
 import { getHistoricalData } from "../util/API";
-import StockContext from "../context/StockContext";
 
 const Chart = ({ stockTicker }) => {
   const [data, setData] = useState([]);
