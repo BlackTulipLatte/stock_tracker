@@ -4,7 +4,7 @@ const checkTime = () => {
   const today = new Date();
   var hours = today.getHours();
   var minutes = today.getMinutes();
-  return (hours === 16 && minutes < 30) || hours < 16;
+  return (hours === 16 && minutes < 30) || (hours < 16 && hours > 9) || (hours === 9 && minutes >= 30);
 };
 
 const IsMarketOpen = () => {
